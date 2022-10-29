@@ -33,16 +33,6 @@ const customTheme = {
 const LoginPage = () => {
     const supabaseClient = useSupabaseClient()
     const user = useUser()
-    const [data, setData] = useState()
-
-    useEffect(() => {
-        async function loadData() {
-            const { data } = await supabaseClient.from('test').select('*')
-            setData(data)
-        }
-        // Only run query once user is logged in.
-        if (user) loadData()
-    }, [user])
 
     if (!user)
         return (

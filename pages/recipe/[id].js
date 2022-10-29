@@ -45,8 +45,10 @@ const Post = () => {
         <div>
             Ingredients:
         </div>
-        {iglist.map((item) => {
-            return <div>{item.name} - {item.amount}</div>
+        {iglist.map((item, idx) => {
+            return (<><div
+                key={idx}
+            >{item.name} - {item.amount}</div></>)
         })}
         <div>
             Instructions:

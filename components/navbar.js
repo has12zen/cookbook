@@ -181,8 +181,8 @@ function List(props) {
   return (
     <ul>
       {data?.length > 0 && data.map((item) => (
-        <Stack as={'nav'} spacing={4}>
-          <NavLink link={"/recipe/" + item.id} key={item.id}>{item.title}</NavLink>
+        <Stack as={'nav'} spacing={4} key={item.id}>
+          <NavLink link={"/recipe/" + item.id} >{item.title}</NavLink>
         </Stack>
       ))}
     </ul>
