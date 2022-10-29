@@ -5,7 +5,7 @@ import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { supabase } from '../lib/initSupabase'
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
+import Navigation from '../components/navbar';
 
 function Home() {
   const supabaseClient = useSupabaseClient()
@@ -35,17 +35,7 @@ function Home() {
 
   return (
     <div>
-      <nav>
-        <ul>
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <a href='#' onClick={() => supabaseClient.auth.signOut()}>Sign out</a>
-          </li>
-        </ul>
-      </nav>
-      <hr />
+      <Navigation />
     </div >
   )
 }
