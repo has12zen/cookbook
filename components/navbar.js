@@ -16,7 +16,6 @@ import {
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
 
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
 const Links = [{text:'home',link:'/'}];
 
 const NavLink = ({ children, ...props }) => (
