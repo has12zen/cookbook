@@ -3,6 +3,7 @@ import { supabase } from '../../lib/initSupabase'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import parser from 'html-react-parser'
+import Navigation from '../../components/navbar'
 
 const Post = () => {
     const router = useRouter()
@@ -38,25 +39,27 @@ const Post = () => {
         <Link href="/">Go Back</Link>
     </>
     return <>
-        <div>
-            Title:
-        </div>
-        <div>{recipe.title}</div>
-        <div>
-            Ingredients:
-        </div>
-        {iglist.map((item, idx) => {
-            return (<><div
-                key={idx}
-            >{item.name} - {item.amount}</div></>)
-        })}
-        <div>
-            Instructions:
-        </div>
-        <>
-            {parser(recipe?.instructions)}
-        </>
-        <Link href="/">Go Back</Link>
+        <Navigation />
+        <main>
+            <div>
+                Title:
+            </div>
+            <div>{recipe.title}</div>
+            <div>
+                Ingredients:
+            </div>
+            {iglist.map((item, idx) => {
+                return (<><div
+                    key={idx}
+                >{item.name} - {item.amount}</div></>)
+            })}
+            <div>
+                Instructions:
+            </div>
+            <>
+                {parser(recipe?.instructions)}
+            </>
+        </main>
     </>
 }
 

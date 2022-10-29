@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import {
   Box,
   Flex,
@@ -12,20 +10,14 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuDivider,
-  FormControl,
-  FormLabel,
-  Input,
-  Textarea,
   useDisclosure,
   useColorModeValue,
   Stack,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
-import Add from './action';
 
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
-const Links = ['browse'];
+const Links = [{text:'home',link:'/'}];
 
 const NavLink = ({ children, ...props }) => (
   <Link
@@ -43,55 +35,6 @@ const NavLink = ({ children, ...props }) => (
 
 export default function Navigation() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const supabaseClient = useSupabaseClient()
-  const router = useRouter();
-  const [recipe, setRecipe] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-
-  useEffect(() => {
-    if (!router.isReady) return;
-    fetchRecipe();
-  }, [router.isReady])
-  const fetchRecipe = async () => {
-    let de = "";
-    if (searchQuery) {
-      de = searchQuery.split(" ").join(" & ");
-    }
-    // console.log("searchQuery",de)
-    if (de === "") {
-      const { data, error } = await supabaseClient.from('recipe').select('*');
-
-      if (error) {
-        console.error(error, "err")
-        return [];
-      }
-      else console.log(data, "txt")
-      setRecipe(data);
-      return;
-
-    }
-    const { data, error } = await supabaseClient
-      .rpc('server', {
-        query: de
-      });
-
-    if (error) {
-      console.error(error, "err")
-      return [];
-    }
-    else console.log(data, "txt")
-    setRecipe(data);
-  };
-
-  const handleChange = (e) => {
-    e.preventDefault();
-    setSearchQuery(e.target.value);
-    if (searchQuery.length > 3) {
-      console.log(searchQuery, "searchQuery")
-      fetchRecipe();
-    }
-  };
-
 
   return (
     <>
@@ -110,8 +53,8 @@ export default function Navigation() {
               as={'nav'}
               spacing={4}
               display={{ base: 'none', md: 'flex' }}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+              {Links.map(({link,text}) => (
+                <NavLink link={link} key={text}>{text}</NavLink>
               ))}
             </HStack>
           </HStack>
@@ -154,37 +97,16 @@ export default function Navigation() {
         {isOpen ? (
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+              {Links.map(({text,link}) => (
+                <NavLink link={link} key={text}>{text}</NavLink>
               ))}
             </Stack>
           </Box>
         ) : null}
       </Box>
 
-      <Flex direction='column' alignContent='center' justifyContent='center'>
-        <Input maxW="500" name='search' value={searchQuery} onChange={handleChange}
-          onSubmit={() => {
-            console.log("searching for: " + searchQuery);
-          }}
-          placeholder="Search"
-        ></Input>
-        <List data={recipe} />
-      </Flex>
     </>
   );
 }
 
-function List(props) {
-  const data = props?.data;
-  console.log(data, "data")
-  return (
-    <ul>
-      {data?.length > 0 && data.map((item) => (
-        <Stack as={'nav'} spacing={4} key={item.id}>
-          <NavLink link={"/recipe/" + item.id} >{item.title}</NavLink>
-        </Stack>
-      ))}
-    </ul>
-  )
-}
+export {NavLink};
