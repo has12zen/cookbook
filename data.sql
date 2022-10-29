@@ -4,7 +4,7 @@ create table Recipe (
     title VARCHAR(25),
     description VARCHAR(50),
     iglist VARCHAR(100),
-    instructions VARCHAR(500)
+    instructions VARCHAR(9500)
 );
 
 drop function if exists server;

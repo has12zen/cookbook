@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import CountryList from '../components/countryList';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { supabase } from '../lib/initSupabase'
 import Link from 'next/link';
